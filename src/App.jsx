@@ -6,7 +6,7 @@ import Banner from "./components/Banner"
 import banner from "./assets/banner.png"
 import Galeria from "./components/Galeria"
 import fotos from "./fotos.json"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ModalZoom from "./components/ModalZoom"
 import Pie from "./components/Pie"
 
@@ -32,6 +32,8 @@ const ContenidoGaleria = styled.section`
 
 
 const App = () => {
+
+  const [consulta, setConsulta] = useState("")
   const [fotosDeGaleria, setFotosDeGaleria] = useState(fotos)
   const [fotoSeleccionada, setFotoSeleccionada] = useState(null)
 
@@ -51,21 +53,19 @@ const App = () => {
         favorita: fotoDeGaleria.id === foto.id ? !foto.favorita : fotoDeGaleria.favorita
       }
     }))
-  }
-
+  }  
 
   return (
     <>
       <FondoGradiente>
         <GlobalStyles />
         <AppContainer>
-          <Cabecera />
+          <Cabecera setConsulta={setConsulta}/>
           <MainContainer>
             <BarraLateral />
             <ContenidoGaleria>
               <Banner texto="La galería más completa de fotos del espacio" backgroundImage={banner} />
-
-              <Galeria alSeleccionarFoto={foto => setFotoSeleccionada(foto)} fotos={fotosDeGaleria} alAlternarFavorito={alAlternarFavorito} />
+              <Galeria alSeleccionarFoto={foto => setFotoSeleccionada(foto)} fotos={fotosDeGaleria} alAlternarFavorito={alAlternarFavorito} consulta = {consulta}/>
             </ContenidoGaleria>
           </MainContainer>
         </AppContainer>
